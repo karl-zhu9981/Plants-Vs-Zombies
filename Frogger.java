@@ -1,8 +1,10 @@
+import java.util.ArrayList;
+import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.image.*;
-public class Frogger extends JFrame implements ActionListener{
+public class Frogger extends JFrame implements ActionListener,KeyListener{
 	JPanel cards;   	//a panel that uses CardLayout
     CardLayout cLayout = new CardLayout();
 	JButton playBtn = new JButton("Play");
@@ -36,7 +38,7 @@ public class Frogger extends JFrame implements ActionListener{
 		cards.add(game, "game");
 		add(cards);
 
-    	//addKeyListener(this);
+    	addKeyListener(this);
     	setResizable(false);
     	setVisible(true);
     }
@@ -50,11 +52,12 @@ public class Frogger extends JFrame implements ActionListener{
 		if(source==playBtn){
 		    cLayout.show(cards,"game");
 		    myTimer.start();
-		    game.requestFocus();
+		    requestFocus();
 		}
 		else if(source==myTimer){
 			game.move();
     		game.traffic();
+    		game.gameState();
    			game.repaint();
     	}
     }
@@ -72,6 +75,8 @@ class GamePanel extends JPanel{
 	private RoadObstacle car, car1, car2, car3, car4, car5;
 	private RoadObstacle truck, truck1, truck2, truck3, truck4, truck5;
 	private WaterObstacle turtle, turtle1, turtle2, turtle3, turtle4, turtle5;
+	private ArrayList<RoadObstacle> rObstacles = new ArrayList<RoadObstacle> ();
+	private ArrayList<WaterObstacle> wObstacles = new ArrayList<WaterObstacle> ();
 	private WaterObstacle log;
 	private Frog frog;
 	private boolean [] keys;
@@ -89,6 +94,18 @@ class GamePanel extends JPanel{
 		truck3 = new RoadObstacle(4,1);
 		truck4 = new RoadObstacle(4,2);
 		truck5 = new RoadObstacle(4,3);
+		rObstacles.add(car);
+		rObstacles.add(car1);
+		rObstacles.add(car2);
+		rObstacles.add(car3);
+		rObstacles.add(car4);
+		rObstacles.add(car5);
+		rObstacles.add(truck);
+		rObstacles.add(truck1);
+		rObstacles.add(truck2);
+		rObstacles.add(truck3);
+		rObstacles.add(truck4);
+		rObstacles.add(truck5);
 		turtle = new WaterObstacle(1,1);
 		turtle1 = new WaterObstacle(1,2);
 		turtle2 = new WaterObstacle(1,3);
@@ -150,6 +167,14 @@ class GamePanel extends JPanel{
 			frog.jump(4);
 		}
 	}
+	public void gameState(){
+		for (int i=0; i<rObstacles.size(); i++){
+			if (rObstacles.get(i).roadCollision(frog.getR())){
+				System.out.println("Lose");
+			}
+		}
+
+	}
 	public void paintComponent(Graphics g){
 		g.drawImage(back,0,0,this);
 		g.drawImage(frogs,frog.gitx(),frog.gity(),this);
@@ -178,7 +203,6 @@ class GamePanel extends JPanel{
 		g.drawImage(logs,log3.gitx(),log3.gity(),this);
 		g.drawImage(logs,log4.gitx(),log4.gity(),this);
 		g.drawImage(logs,log5.gitx(),log5.gity(),this);*/
-
 
 	}
 }
