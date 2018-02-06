@@ -1,8 +1,9 @@
 import java.util.*;
-import java.awt.image.*;
+import java.awt.*;
 public class Frog{
     private int x, y, width, height, v, lives;
     private String pic;
+
     public Frog(){
     	x = 400;
     	y = 550;
@@ -11,20 +12,30 @@ public class Frog{
     	pic = "RetroFrog_100W.png";
     	v = 2;
     	lives = 3;
+
     }
     public void jump(int direction){
     	//left = 1, up = 2, right = 3, down = 4
+
     	if(direction == 1){
-    		x -= v;
+    		if (x-v>=0){
+    			x -= v;
+    		}
     	}
     	if(direction == 2){
-    		y -= v;
+    		if (y-v>=0){
+    			y -= v;
+    		}
     	}
     	if(direction == 3){
-    		x += v;
+    		if (x+v<=800){
+    			x += v;
+    		}
     	}
     	if(direction == 4){
-    		y += v;
+    		if (y+v<=600){
+    			y+= v;
+    		}
     	}
     }
     public String pik(){
@@ -42,7 +53,9 @@ public class Frog{
     public int geth(){
     	return height;
     }
-    
-    
-    
+	public Rectangle getR(){
+		return new Rectangle(this.x, this.y, this.width, this.height);
+	}
+
+
 }
