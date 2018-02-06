@@ -1,6 +1,6 @@
 import java.util.*;
-import java.awt.image.*;
-public class WaterObstacle {  
+import java.awt.*;
+public class WaterObstacle {
     private int x, y, v, width, height, type;
     private String pic;
     public WaterObstacle(int tipe, int pos){
@@ -31,7 +31,7 @@ public class WaterObstacle {
 	    	width=60;
 	    	height=80;
 	    	pic="turtle.png";
-	    	
+
     	}
     	if(tipe == 4){
     		type = tipe;
@@ -48,9 +48,8 @@ public class WaterObstacle {
     	else if(pos == 3){
     		x = 533;
     	}
-    	
     }
-    
+
     public void moveObstacle(){
         if(type%2 == 0){
     		x += v;
@@ -65,7 +64,7 @@ public class WaterObstacle {
     		}
     	}
     }
-    
+
     public int gitx(){
     	return x;
     }
@@ -81,4 +80,11 @@ public class WaterObstacle {
     public String pik(){
     	return pic;
     }
+    public boolean waterCollision(Rectangle p){
+    	if (p.intersects(new Rectangle(this.x, this.y, this.width, this.height))){
+    		 return true;
+    	}
+    	return false;
+    }
+
 }
