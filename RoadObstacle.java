@@ -1,10 +1,8 @@
 import java.util.*;
-import java.awt.image.*;
+import java.awt.*;
 public class RoadObstacle {
     private int x, y, v, width, height, type;
-    private int [] par = {width,height};
     private String pic;
-    private Rectangle rect;
     public RoadObstacle(int tipe, int pos){
     	// 1 is car in lane 1, 2 is truck lane 2, 3 is car lane 3, 4 is truck lane 4
     	if(tipe == 1){
@@ -33,7 +31,7 @@ public class RoadObstacle {
 	    	width=40;
 	    	height=60;
 	    	pic="car1Right.png";
-	    	
+
     	}
     	if(tipe == 4){
     		type = tipe;
@@ -50,7 +48,6 @@ public class RoadObstacle {
     	else if(pos == 3){
     		x = 533;
     	}
-    	this.rect=new Rectangle(int, int, int, int);
     }
     public void drive(){
     	if(type%2 == 0){
@@ -65,7 +62,7 @@ public class RoadObstacle {
     			x = 800;
     		}
     	}
-    	
+
     }
     public String pik(){
     	return pic;
@@ -82,7 +79,14 @@ public class RoadObstacle {
     public int geth(){
     	return height;
     }
-    
-    
-    
+    public boolean roadCollision(Rectangle p){
+    	Rectangle ob = new Rectangle(this.x, this.y, this.width, this.height);
+    	//System.out.println(p+ " ==== " + ob);
+    	if (p.intersects(ob)){
+    		 return true;
+    	}
+    	return false;
+    }
+
+
 }
