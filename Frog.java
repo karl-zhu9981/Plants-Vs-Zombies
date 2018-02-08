@@ -6,7 +6,7 @@ public class Frog{
 
     public Frog(){
     	x = 400;
-    	y = 550;
+    	y = 560;
     	width = 35;
     	height = 35;
     	pic = "RetroFrog_100W.png";
@@ -52,6 +52,17 @@ public class Frog{
     }
     public int geth(){
     	return height;
+    }
+    public int life(){
+    	return lives;
+    }
+    public int life(int x){
+    	lives -= 1;
+    	return lives;
+    }
+    public void reset(){
+    	x = 400;
+    	y = 560;
     }
 	public Rectangle getR(){
 		return new Rectangle(this.x, this.y, this.width, this.height);
