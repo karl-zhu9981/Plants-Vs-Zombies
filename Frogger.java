@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -7,21 +6,20 @@ import java.awt.image.*;
 public class Frogger extends JFrame implements ActionListener,KeyListener{
 	JPanel cards;   	//a panel that uses CardLayout
     CardLayout cLayout = new CardLayout();
-	JButton playBtn = new JButton("Play");
 	Timer myTimer;
 	GamePanel game;
-	Image menuPic;
+	private Image menuPic;
     public Frogger(){
     	super("Frogger");
     	game = new GamePanel();
     	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	setSize(800,600);
-    	playBtn.addActionListener(this);
 		myTimer = new Timer(10,this);
 		myTimer.start();
 
-		ImageIcon back = new ImageIcon("menuPic.png");
-		JLabel backLabel = new JLabel(back);
+		menuPic = new ImageIcon("images.jpg").getImage();
+		menuPic = menuPic.getScaledInstance(800,600,Image.SCALE_SMOOTH); 
+		JLabel backLabel = new JLabel(new ImageIcon(menuPic));
 		JLayeredPane mPage=new JLayeredPane(); 	// LayeredPane allows my to control what shows on top
 		mPage.setLayout(null);
 
@@ -29,10 +27,6 @@ public class Frogger extends JFrame implements ActionListener,KeyListener{
 		backLabel.setLocation(0,0);
 		mPage.add(backLabel,1);					// The numbers I use when adding to the LayeredPane
 												// are just relative to one another. Higher numbers on top.
-		playBtn.setSize(100,30);
-		playBtn.setLocation(350,315);
-		mPage.add(playBtn,2);
-
 		cards = new JPanel(cLayout);
 		cards.add(mPage, "menu");
 		cards.add(game, "game");
@@ -49,21 +43,31 @@ public class Frogger extends JFrame implements ActionListener,KeyListener{
     }
     public void actionPerformed(ActionEvent evt){
     	Object source =evt.getSource();
-		if(source==playBtn){
+		/*if(source==playBtn){
 		    cLayout.show(cards,"game");
 		    myTimer.start();
 		    requestFocus();
-		}
-		else if(source==myTimer){
+		}*/
+		if(source==myTimer){
 			game.move();
     		game.traffic();
     		game.gameState();
    			game.repaint();
     	}
+    	if(game.state()==1){
+    		cLayout.show(cards,"menu");
+		    myTimer.start();
+		    requestFocus();
+    	}
     }
     public void keyTyped(KeyEvent e){}
     public void keyPressed(KeyEvent e){
     	game.setKey(e.getKeyCode(),true);
+    	if (e.getKeyCode()==KeyEvent.VK_ENTER){
+            cLayout.show(cards,"game");
+		    myTimer.start();
+		    requestFocus();
+        }
     }
      public void keyReleased(KeyEvent e) {
     	game.setKey(e.getKeyCode(),false);
@@ -77,10 +81,12 @@ class GamePanel extends JPanel{
 	private WaterObstacle turtle, turtle1, turtle2, turtle3, turtle4, turtle5;
 	private ArrayList<RoadObstacle> rObstacles = new ArrayList<RoadObstacle> ();
 	private ArrayList<WaterObstacle> wObstacles = new ArrayList<WaterObstacle> ();
+	private ArrayList<Image> frogPics = new ArrayList<Image>();
 	private WaterObstacle log;
 	private Frog frog;
 	private boolean [] keys;
 	private Image back, frogs, cars, trucks, turtles, logs;
+	private int end = 0;
 	public GamePanel(){
 		car = new RoadObstacle(1,1);
 		car1 = new RoadObstacle(1,2);
@@ -155,6 +161,9 @@ class GamePanel extends JPanel{
 	}
 	public void move(){
 		if(keys[KeyEvent.VK_RIGHT] ){
+			for(int i=0;i<2;i++){
+				
+			}
 			frog.jump(3);
 		}
 		else if(keys[KeyEvent.VK_LEFT] ){
@@ -168,12 +177,22 @@ class GamePanel extends JPanel{
 		}
 	}
 	public void gameState(){
-		for (int i=0; i<rObstacles.size(); i++){
-			if (rObstacles.get(i).roadCollision(frog.getR())){
-				System.out.println("Lose");
+		if(frog.life()==0){
+			System.out.println("LOSE");
+			end = 1;
+		}
+		else{
+			for (int i=0; i<rObstacles.size(); i++){
+				if (rObstacles.get(i).roadCollision(frog.getR())){
+					frog.reset();
+					System.out.println("Lives: "+frog.life(1));
+					
+				}
 			}
 		}
-
+	}
+	public int state(){
+		return end;
 	}
 	public void paintComponent(Graphics g){
 		g.drawImage(back,0,0,this);
@@ -206,4 +225,3 @@ class GamePanel extends JPanel{
 
 	}
 }
-
