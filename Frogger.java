@@ -82,11 +82,17 @@ class GamePanel extends JPanel{
 	private ArrayList<RoadObstacle> rObstacles = new ArrayList<RoadObstacle> ();
 	private ArrayList<WaterObstacle> wObstacles = new ArrayList<WaterObstacle> ();
 	private ArrayList<Image> frogPics = new ArrayList<Image>();
+	private ArrayList<Rectangle> winRects = new ArrayList<Rectangle>();
+	Rectangle base1 = new Rectangle(665,5,70,40);
+	Rectangle base2 = new Rectangle(470,5,70,40);
+	Rectangle base3 = new Rectangle(295,5,65,40);
+	Rectangle base4 = new Rectangle(105,5,70,40);
 	private WaterObstacle log;
 	private Frog frog;
 	private boolean [] keys;
-	private Image back, frogs, cars, trucks, turtles, logs;
-	private int end = 0;
+	private Image back, frogs, cars, trucks, turtles, logs, fPics;
+	private int end;
+	private int cycle = 0;
 	public GamePanel(){
 		car = new RoadObstacle(1,1);
 		car1 = new RoadObstacle(1,2);
@@ -119,6 +125,10 @@ class GamePanel extends JPanel{
 		turtle4 = new WaterObstacle(3,2);
 		turtle5 = new WaterObstacle(3,3);
 		log = new WaterObstacle(1,1);
+		winRects.add(base1);
+		winRects.add(base2);
+		winRects.add(base3);
+		winRects.add(base4);
 		frog = new Frog();
 		keys = new boolean[KeyEvent.KEY_LAST+1];
 		back= new ImageIcon("background.jpg").getImage();
@@ -133,6 +143,12 @@ class GamePanel extends JPanel{
 		turtles = turtles.getScaledInstance(turtle.getw(),turtle.geth(),Image.SCALE_SMOOTH);
 		logs = new ImageIcon(log.pik()).getImage();
 		logs = logs.getScaledInstance(log.getw(),log.geth(),Image.SCALE_SMOOTH);
+		for(int i=0;i<8;i++){
+			fPics = new ImageIcon((i+1)+".png").getImage();
+			fPics = fPics.getScaledInstance(frog.getw(),frog.geth(),Image.SCALE_SMOOTH);
+			frogPics.add(new ImageIcon(fPics).getImage());
+		}
+		System.out.println(frogPics.size());
 		setSize(800,600);
 	}
 	public void setKey(int k, boolean v){
@@ -140,7 +156,7 @@ class GamePanel extends JPanel{
 	}
 	public void traffic(){
 		car.drive();
-		car1.drive();
+		/*car1.drive();
 		car2.drive();
 		car3.drive();
 		car4.drive();
@@ -157,23 +173,27 @@ class GamePanel extends JPanel{
 		turtle3.moveObstacle();
 		turtle4.moveObstacle();
 		turtle5.moveObstacle();
-		//log.moveObstacle();
+		log.moveObstacle();*/
 	}
 	public void move(){
 		if(keys[KeyEvent.VK_RIGHT] ){
-			for(int i=0;i<2;i++){
-				
-			}
+			cycle = 8;
 			frog.jump(3);
 		}
 		else if(keys[KeyEvent.VK_LEFT] ){
+			cycle = 6;
 			frog.jump(1);
 		}
 		else if(keys[KeyEvent.VK_UP] ){
+			cycle = 2;
 			frog.jump(2);
 		}
 		else if(keys[KeyEvent.VK_DOWN] ){
+			cycle = 4;
 			frog.jump(4);
+		}
+		else{
+			cycle = 0;
 		}
 	}
 	public void gameState(){
@@ -181,6 +201,10 @@ class GamePanel extends JPanel{
 			System.out.println("LOSE");
 			end = 1;
 		}
+		else if(frog.getR().intersects(base1)||){
+			System.out.println("WIN");
+		}
+		
 		else{
 			for (int i=0; i<rObstacles.size(); i++){
 				if (rObstacles.get(i).roadCollision(frog.getR())){
@@ -196,7 +220,9 @@ class GamePanel extends JPanel{
 	}
 	public void paintComponent(Graphics g){
 		g.drawImage(back,0,0,this);
-		g.drawImage(frogs,frog.gitx(),frog.gity(),this);
+		/*for(int i=cycle-2;i<cycle;i++){
+			g.drawImage(frogPics.get(i),frog.gitx(),frog.gity(),this);
+		}
 		g.drawImage(cars,car.gitx(),car.gity(),this);
 		g.drawImage(cars,car1.gitx(),car1.gity(),this);
 		g.drawImage(cars,car2.gitx(),car2.gity(),this);
@@ -215,8 +241,22 @@ class GamePanel extends JPanel{
 		g.drawImage(turtles,turtle2.gitx(),turtle2.gity(),this);
 		g.drawImage(turtles,turtle3.gitx(),turtle3.gity(),this);
 		g.drawImage(turtles,turtle4.gitx(),turtle4.gity(),this);
-		g.drawImage(turtles,turtle5.gitx(),turtle5.gity(),this);
-
+		g.drawImage(turtles,turtle5.gitx(),turtle5.gity(),this);*/
+		
+		g.setColor(Color.RED);
+        g.fillRect(rObstacles.get(0).gitx(),rObstacles.get(0).gity(),rObstacles.get(0).geth(),rObstacles.get(0).getw());
+        g.setColor(Color.BLUE);
+        g.fillRect(frog.gitx(),frog.gity(),frog.getw(),frog.geth());
+        g.setColor(Color.YELLOW);
+        g.fillRect(665,5,70,40);
+        g.setColor(Color.YELLOW);
+        g.fillRect(470,5,70,40);
+        g.setColor(Color.YELLOW);
+        g.fillRect(295,5,65,40);
+        g.setColor(Color.YELLOW);
+        g.fillRect(105,5,70,40);
+     
+		
 		/*g.drawImage(logs,log1.gitx(),log1.gity(),this);
 		g.drawImage(logs,log2.gitx(),log2.gity(),this);
 		g.drawImage(logs,log3.gitx(),log3.gity(),this);
