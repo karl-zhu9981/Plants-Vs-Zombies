@@ -27,7 +27,7 @@ public class RoadObstacle {
     		type = tipe;
     		x=850;
 	    	y=400;
-	    	v=4;
+	    	v=2;
 	    	width=40;
 	    	height=60;
 	    	pic="car1Right.png";
@@ -37,7 +37,7 @@ public class RoadObstacle {
     		type = tipe;
     		x=-50;
 	    	y=350;
-	    	v=3;
+	    	v=2;
 	    	width=40;
 	    	height=80;
 	    	pic="truck1Right.png";
@@ -80,7 +80,7 @@ public class RoadObstacle {
     	return height;
     }
     public boolean roadCollision(Rectangle p){
-    	Rectangle ob = new Rectangle(this.x, this.y, this.width, this.height);
+    	Rectangle ob = new Rectangle(x,y,height,width);
     	//System.out.println(p+ " ==== " + ob);
     	if (p.intersects(ob)){
     		 return true;
