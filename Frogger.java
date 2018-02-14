@@ -1,3 +1,7 @@
+//Frogger.java
+//ICS 4U
+//Karl Zhu and Ibraheem Aloran
+//Frogger is a basic game 
 import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
@@ -16,7 +20,8 @@ public class Frogger2 extends JFrame implements ActionListener,KeyListener{
     	setSize(800,600);
 		myTimer = new Timer(10,this);
 		myTimer.start();
-
+		
+	    	//We make our background picture for the menu
 		menuPic = new ImageIcon("menuPic.jpg").getImage();
 		menuPic = menuPic.getScaledInstance(800,600,Image.SCALE_SMOOTH);
 		JLabel backLabel = new JLabel(new ImageIcon(menuPic));
@@ -95,6 +100,7 @@ class GamePanel extends JPanel{
 	private int end;
 	private int cycle = 0;
 	public GamePanel(){
+		//The different road obstacles and water obstacles that we have trying to hinder the player
 		car = new RoadObstacle(1,1);
 		car1 = new RoadObstacle(1,2);
 		car2 = new RoadObstacle(1,3);
