@@ -1,19 +1,14 @@
-//Karl Zhu and Ibraheem Aloran
-//ICS 4U
-//Frog.java
-//This class makes our frog object and the information that it goes with, the controllable character by the users
-//They contain the position of the frog, the width and height of the frog and the number of lives that frog has.
 import java.util.*;
 import java.awt.*;
 public class Frog{
-    private int x, y, width, height, v, lives;//Our variables for the frog, declaring the 
+    private int x, y, width, height, v, lives;
     private String pic;
 
     public Frog(){
     	x = 400;
     	y = 560;
-    	width = 35;
-    	height = 35;
+    	width = 25;
+    	height = 25;
     	pic = "RetroFrog_100W.png";
     	v = 2;
     	lives = 3;
@@ -49,6 +44,10 @@ public class Frog{
     public int gitx(){
     	return x;
     }
+    public int gitx(int n){
+    	x += n;
+    	return x;
+    }
     public int gity(){
     	return y;
     }
@@ -70,7 +69,7 @@ public class Frog{
     	y = 560;
     }
 	public Rectangle getR(){
-		return new Rectangle(this.x, this.y, this.width, this.height);
+		return new Rectangle(x+3,y+3,width, height);
 	}
 
 
