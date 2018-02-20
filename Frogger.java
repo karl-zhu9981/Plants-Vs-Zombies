@@ -238,7 +238,7 @@ class GamePanel extends JPanel{
 
 				}
 			}
-			if(frog.gity()<260){
+			if(frog.gity()<266){
 				for (int i=0; i<wObstacles.size(); i++){//Overlaps the water obstacles, then they move with the water obstacle
 					System.out.println(wObstacles.get(i).gity());
 					if (frog.getR().intersects(wObstacles.get(i).getR())){
