@@ -55,6 +55,9 @@ public class Frog{
     	x += n;
     	return x;
     }
+    public void setx(int n){//Sets the x coordinate of the frog
+    	this.x= n;
+    }
     public int gity(){//Gets the y coordinate of the frog
     	return y;
     }
