@@ -205,17 +205,16 @@ class GamePanel extends JPanel{
 		else if(keys[KeyEvent.VK_LEFT] ){//Goes left
 			cycle = 4;
 			frog.jump(1);
-			score+=10;
 		}
 		else if(keys[KeyEvent.VK_UP] ){//Goes up
 			cycle = 0;
 			frog.jump(2);
-			score+=10;
+			score+=10;//Score
 		}
 		else if(keys[KeyEvent.VK_DOWN] ){//GOes down
 			cycle = 2;
 			frog.jump(4);
-			score+=10;
+			score-=10;//Score
 		}
 		else{//Stationary movement
 			cycle = 8;
