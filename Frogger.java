@@ -241,7 +241,7 @@ class GamePanel extends JPanel{
 				for (int i=0; i<wObstacles.size(); i++){//Overlaps the water obstacles, then they move with the water obstacle
 					if (frog.getR().contains(wObstacles.get(i).getR())){
 						landed = i
-						frog.gitx()= wObstacles.get(i).gitx();
+						frog.setx(wObstacles.get(i).gitx());
 						checker.add(1);//We add a checker to show that it has landed
 					}
 					else{//Does not land
