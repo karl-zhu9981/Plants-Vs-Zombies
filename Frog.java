@@ -1,7 +1,12 @@
+//Karl Zhu and Ibraheem Aloran
+//ICS 4U
+//Frog.java
+//This class makes our frog object and the information that it goes with, the controllable character by the users
+//They contain the position of the frog, the width and height of the frog and the number of lives that frog has.
 import java.util.*;
 import java.awt.*;
 public class Frog{
-    private int x, y, width, height, v, lives;
+    private int x, y, width, height, v, lives;//Our variables for the frog, declaring the 
     private String pic;
 
     public Frog(){
