@@ -70,7 +70,7 @@ public class WaterObstacle {
     	}
     	else{
     		x -= v;//Goes left
-    		if(x<-50){//Makes sure it goes in a continous rotation
+    		if(x<=50){//Makes sure it goes in a continous rotation
     			x = 850;
     		}
     	}
