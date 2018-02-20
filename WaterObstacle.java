@@ -58,20 +58,20 @@ public class WaterObstacle {
     		x = 533;
     	}
     	//The rectangle set by the water obstacle
-    	ob = new Rectangle(x,y,width,height+10);
+    	ob = new Rectangle(x,y,width,height);
     }
 
     public void moveObstacle(){//Moves the water obstacles in the lanes
         if(type%2 == 0){//Lanes 2 and 4
     		x += v;//Goes right
-    		if(x > 850){//Makes sure it goes in a continous rotation
-    		x = -50;
+    		if(x > 800){//Makes sure it goes in a continous rotation
+    		x = 0;
     		}
     	}
     	else{
     		x -= v;//Goes left
-    		if(x<=50){//Makes sure it goes in a continous rotation
-    			x = 850;
+    		if(x<=0){//Makes sure it goes in a continous rotation
+    			x = 800;
     		}
     	}
     }
