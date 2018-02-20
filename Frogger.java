@@ -1,29 +1,24 @@
-//Frogger.java
-//ICS 4U
-//Karl Zhu and Ibraheem Aloran
-//Frogger is a basic game 
 import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.image.*;
-public class Frogger2 extends JFrame implements ActionListener,KeyListener{
+public class Frogger extends JFrame implements ActionListener,KeyListener{
 	JPanel cards;   	//a panel that uses CardLayout
     CardLayout cLayout = new CardLayout();
 	Timer myTimer;
 	GamePanel game;
 	private Image menuPic;
-    public Frogger2(){
+    public Frogger(){
     	super("Frogger");
     	game = new GamePanel();
     	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	setSize(800,600);
 		myTimer = new Timer(10,this);
 		myTimer.start();
-		
-	    	//We make our background picture for the menu
-		menuPic = new ImageIcon("menuPic.jpg").getImage();
-		menuPic = menuPic.getScaledInstance(800,600,Image.SCALE_SMOOTH);
+
+		menuPic = new ImageIcon("images.jpg").getImage();
+		menuPic = menuPic.getScaledInstance(800,600,Image.SCALE_SMOOTH); 
 		JLabel backLabel = new JLabel(new ImageIcon(menuPic));
 		JLayeredPane mPage=new JLayeredPane(); 	// LayeredPane allows my to control what shows on top
 		mPage.setLayout(null);
@@ -42,17 +37,12 @@ public class Frogger2 extends JFrame implements ActionListener,KeyListener{
     	setVisible(true);
     }
     public static void main(String[] args) {
-		new Frogger2();
+		new Frogger();
 
 
     }
     public void actionPerformed(ActionEvent evt){
     	Object source =evt.getSource();
-		/*if(source==playBtn){
-		    cLayout.show(cards,"game");
-		    myTimer.start();
-		    requestFocus();
-		}*/
 		if(source==myTimer){
 			game.move();
     		game.traffic();
@@ -88,56 +78,67 @@ class GamePanel extends JPanel{
 	private ArrayList<WaterObstacle> wObstacles = new ArrayList<WaterObstacle> ();
 	private ArrayList<Image> frogPics = new ArrayList<Image>();
 	private ArrayList<Rectangle> winRects = new ArrayList<Rectangle>();
+	private ArrayList<Integer> won = new ArrayList<Integer>();
+	private ArrayList<Integer> checker = new ArrayList<Integer>();
 	Rectangle base1 = new Rectangle(665,5,70,40);
 	Rectangle base2 = new Rectangle(470,5,70,40);
 	Rectangle base3 = new Rectangle(295,5,65,40);
 	Rectangle base4 = new Rectangle(105,5,70,40);
-	private WaterObstacle log;
+	private WaterObstacle log, log1, log2, log3, log4;
 	private Frog frog;
-	private int numLives=3;
 	private boolean [] keys;
-	private Image back, frogs, cars, trucks, turtles, logs, fPics;
-	private int end;
+	private Image back, frogs, cars, trucks, turtles, logs, fPics, heart;
+	private int end, count;
+	private int rotate = 0;
 	private int cycle = 0;
+	private int info = 20;
 	public GamePanel(){
-		//The different road obstacles and water obstacles that we have trying to hinder the player
 		car = new RoadObstacle(1,1);
-		car1 = new RoadObstacle(1,2);
+		//car1 = new RoadObstacle(1,2);
 		car2 = new RoadObstacle(1,3);
 		car3 = new RoadObstacle(3,1);
-		car4 = new RoadObstacle(3,2);
+		//car4 = new RoadObstacle(3,2);
 		car5 = new RoadObstacle(3,3);
 		truck = new RoadObstacle(2,1);
-		truck1 = new RoadObstacle(2,2);
+		//truck1 = new RoadObstacle(2,2);
 		truck2 = new RoadObstacle(2,3);
-		truck3 = new RoadObstacle(4,1);
+		//truck3 = new RoadObstacle(4,1);
 		truck4 = new RoadObstacle(4,2);
-		truck5 = new RoadObstacle(4,3);
+		//truck5 = new RoadObstacle(4,3);
 		rObstacles.add(car);
-		rObstacles.add(car1);
+		//rObstacles.add(car1);
 		rObstacles.add(car2);
 		rObstacles.add(car3);
-		rObstacles.add(car4);
+		//rObstacles.add(car4);
 		rObstacles.add(car5);
 		rObstacles.add(truck);
-		rObstacles.add(truck1);
+		//rObstacles.add(truck1);
 		rObstacles.add(truck2);
-		rObstacles.add(truck3);
+		//rObstacles.add(truck3);
 		rObstacles.add(truck4);
-		rObstacles.add(truck5);
+		//rObstacles.add(truck5);
 		turtle = new WaterObstacle(1,1);
 		turtle1 = new WaterObstacle(1,2);
 		turtle2 = new WaterObstacle(1,3);
 		turtle3 = new WaterObstacle(3,1);
-		turtle4 = new WaterObstacle(3,2);
+		//turtle4 = new WaterObstacle(3,2);
 		turtle5 = new WaterObstacle(3,3);
-		log = new WaterObstacle(1,1);
+		log = new WaterObstacle(2,1);
+		log1 = new WaterObstacle(4,2);
+		log2 = new WaterObstacle(4,1);
+		log3 = new WaterObstacle(4,3);
+		log4 = new WaterObstacle(2,3);
 		wObstacles.add(turtle);
 		wObstacles.add(turtle1);
 		wObstacles.add(turtle2);
 		wObstacles.add(turtle3);
-		wObstacles.add(turtle4);
 		wObstacles.add(turtle5);
+		wObstacles.add(log);
+		wObstacles.add(log1);
+		wObstacles.add(log2);
+		wObstacles.add(log3);
+		wObstacles.add(log4);
+		System.out.println(wObstacles.size());
 		winRects.add(base1);
 		winRects.add(base2);
 		winRects.add(base3);
@@ -154,11 +155,13 @@ class GamePanel extends JPanel{
 		trucks = trucks.getScaledInstance(truck.geth(),truck.getw(),Image.SCALE_SMOOTH);
 		turtles = new ImageIcon(turtle.pik()).getImage();
 		turtles = turtles.getScaledInstance(turtle.getw(),turtle.geth(),Image.SCALE_SMOOTH);
-		logs = new ImageIcon(log.pik()).getImage();
+		logs = new ImageIcon("log.png").getImage();
 		logs = logs.getScaledInstance(log.getw(),log.geth(),Image.SCALE_SMOOTH);
+		heart = new ImageIcon("heart.png").getImage();
+		heart = heart.getScaledInstance(20,20,Image.SCALE_SMOOTH); 
 		for(int i=0;i<8;i++){
-			fPics = new ImageIcon((i+1)+".png").getImage();
-			fPics = fPics.getScaledInstance(frog.getw(),frog.geth(),Image.SCALE_SMOOTH);
+			fPics = new ImageIcon((i)+".png").getImage();
+			fPics = fPics.getScaledInstance(35,35,Image.SCALE_SMOOTH);
 			frogPics.add(new ImageIcon(fPics).getImage());
 		}
 		System.out.println(frogPics.size());
@@ -168,56 +171,42 @@ class GamePanel extends JPanel{
 		keys[k] = v;
 	}
 	public void traffic(){
-		car.drive();
-		/*car1.drive();
-		car2.drive();
-		car3.drive();
-		car4.drive();
-		car5.drive();
-		truck.drive();
-		truck1.drive();
-		truck2.drive();
-		truck3.drive();
-		truck4.drive();
-		truck5.drive();
-		turtle.moveObstacle();
-		turtle1.moveObstacle();
-		turtle2.moveObstacle();
-		turtle3.moveObstacle();
-		turtle4.moveObstacle();
-		turtle5.moveObstacle();
-		log.moveObstacle();*/
+		for(int i=0;i<rObstacles.size();i++){
+			rObstacles.get(i).drive();
+		}
+		for(int i=0;i<wObstacles.size();i++){
+			wObstacles.get(i).moveObstacle();
+		}
 	}
 	public void move(){
 		if(keys[KeyEvent.VK_RIGHT] ){
-			cycle = 8;
+			cycle = 6;
 			frog.jump(3);
 		}
 		else if(keys[KeyEvent.VK_LEFT] ){
-			cycle = 6;
+			cycle = 4;
 			frog.jump(1);
 		}
 		else if(keys[KeyEvent.VK_UP] ){
-			cycle = 2;
+			cycle = 0;
 			frog.jump(2);
 		}
 		else if(keys[KeyEvent.VK_DOWN] ){
-			cycle = 4;
+			cycle = 2;
 			frog.jump(4);
 		}
 		else{
-			cycle = 0;
+			cycle = 8;
 		}
 	}
 	public void gameState(){
+		/*if(winRects.size() == 0){
+			end = 1;
+		}*/
 		if(frog.life()==0){
 			System.out.println("LOSE");
 			end = 1;
-		}
-		else if(frog.getR().intersects(base1)){
-			System.out.println("WIN");
-		}
-
+		}	
 		else{
 			for (int i=0; i<rObstacles.size(); i++){
 				if (rObstacles.get(i).roadCollision(frog.getR())){
@@ -226,17 +215,45 @@ class GamePanel extends JPanel{
 
 				}
 			}
-			if (frog.getY()<=200){
+			if(frog.gity()<274){
 				for (int i=0; i<wObstacles.size(); i++){
-					if (!wObstacles.get(i).waterCollision(frog.getR())){
-						numLives-=1;
-						frog.reset();
-						System.out.println("Lives: "+frog.life(1));
-
+					if (frog.getR().intersects(wObstacles.get(i).getR())){
+						//System.out.println("YES");
+						checker.add(1);
+					}
+					else{
+						//System.out.println("NO");
+						checker.add(0);
 					}
 				}
+				for(int i=checker.size()-1;i>=0;i--){
+					if(checker.get(i)==1){
+						count = 1;
+						checker.remove(i);
+						//System.out.println(count);
+					}
+					else{
+						checker.remove(i);
+					}
+				}
+				if(count == 0){
+					//frog.reset();
+					System.out.println("NO");
+				}
+				else{
+					System.out.println("YES");
+					count = 0;
+				}	
 			}
-
+			
+			for(int i=0;i<winRects.size();i++){
+				if(frog.getR().intersects(winRects.get(i))){
+					won.add(i+1);
+					winRects.remove(i);
+					frog.reset();
+				}
+			}
+			//System.out.println(checker.size());
 		}
 	}
 	public int state(){
@@ -244,64 +261,72 @@ class GamePanel extends JPanel{
 	}
 	public void paintComponent(Graphics g){
 		g.drawImage(back,0,0,this);
-		/*for(int i=cycle-2;i<cycle;i++){
-			g.drawImage(frogPics.get(i),frog.getX(),frog.getY(),this);
-		}
-		g.drawImage(cars,car.getX(),car.getY(),this);
-		g.drawImage(cars,car1.getX(),car1.getY(),this);
-		g.drawImage(cars,car2.getX(),car2.getY(),this);
-		g.drawImage(cars,car3.getX(),car3.getY(),this);
-		g.drawImage(cars,car4.getX(),car4.getY(),this);
-		g.drawImage(cars,car5.getX(),car5.getY(),this);
-		g.drawImage(trucks,truck.getX(),truck.getY(),this);
-		g.drawImage(trucks,truck1.getX(),truck1.getY(),this);
-		g.drawImage(trucks,truck2.getX(),truck2.getY(),this);
-		g.drawImage(trucks,truck3.getX(),truck3.getY(),this);
-		g.drawImage(trucks,truck4.getX(),truck4.getY(),this);
-		g.drawImage(trucks,truck5.getX(),truck5.getY(),this);
-		g.drawImage(logs,log.getX(),log.getY(),this);
-		g.drawImage(turtles,turtle.getX(),turtle.getY(),this);
-		g.drawImage(turtles,turtle1.getX(),turtle1.getY(),this);
-		g.drawImage(turtles,turtle2.getX(),turtle2.getY(),this);
-		g.drawImage(turtles,turtle3.getX(),turtle3.getY(),this);
-		g.drawImage(turtles,turtle4.getX(),turtle4.getY(),this);
-		g.drawImage(turtles,turtle5.getX(),turtle5.getY(),this);*/
-
-		g.setColor(Color.RED);
-        g.fillRect(rObstacles.get(0).getX(),rObstacles.get(0).getY(),rObstacles.get(0).geth(),rObstacles.get(0).getw());
+		/*g.setColor(Color.BLUE);
+        g.fillRect(frog.gitx()+3,frog.gity()+3,frog.getw(),frog.geth());
         g.setColor(Color.RED);
-        g.fillRect(rObstacles.get(1).getX(),rObstacles.get(1).getY(),rObstacles.get(1).geth(),rObstacles.get(1).getw());
+        g.fillRect(log.gitx(),log.gity(),log.getw(),log.geth());
         g.setColor(Color.RED);
-        g.fillRect(rObstacles.get(2).getX(),rObstacles.get(2).getY(),rObstacles.get(2).geth(),rObstacles.get(2).getw());
-        g.setColor(Color.RED);
-        g.fillRect(rObstacles.get(3).getX(),rObstacles.get(3).getY(),rObstacles.get(3).geth(),rObstacles.get(3).getw());
-        g.setColor(Color.WHITE);
-        g.fillRect(wObstacles.get(0).getX(),wObstacles.get(0).getY(),wObstacles.get(0).geth(),wObstacles.get(0).getw());
-        g.setColor(Color.WHITE);
-        g.fillRect(wObstacles.get(1).getX(),wObstacles.get(1).getY(),wObstacles.get(1).geth(),wObstacles.get(1).getw());
-        g.setColor(Color.WHITE);
-        g.fillRect(wObstacles.get(2).getX(),wObstacles.get(2).getY(),wObstacles.get(2).geth(),wObstacles.get(2).getw());
-        g.setColor(Color.WHITE);
-        g.fillRect(wObstacles.get(3).getX(),wObstacles.get(3).getY(),wObstacles.get(3).geth(),wObstacles.get(3).getw());
-        g.setColor(Color.WHITE);
-        g.fillRect(wObstacles.get(4).getX(),wObstacles.get(4).getY(),wObstacles.get(4).geth(),wObstacles.get(4).getw());
-        g.setColor(Color.BLUE);
-        g.fillRect(frog.getX(),frog.getY(),frog.getw(),frog.geth());
+        g.fillRect(log1.gitx(),log1.gity(),log1.getw(),log1.geth());
         g.setColor(Color.YELLOW);
+        g.fillRect(turtle.gitx(),turtle.gity(),turtle.geth(),turtle.getw()+10);*/
+		g.drawImage(cars,car.gitx(),car.gity(),this);
+		g.drawImage(cars,car2.gitx(),car2.gity(),this);
+		g.drawImage(cars,car3.gitx(),car3.gity(),this);
+		g.drawImage(cars,car5.gitx(),car5.gity(),this);
+		g.drawImage(trucks,truck.gitx(),truck.gity(),this);
+		g.drawImage(trucks,truck2.gitx(),truck2.gity(),this);
+		g.drawImage(trucks,truck4.gitx(),truck4.gity(),this);
+		g.drawImage(logs,log.gitx(),log.gity(),this);
+		g.drawImage(logs,log1.gitx(),log1.gity(),this);
+		g.drawImage(logs,log2.gitx(),log2.gity(),this);
+		g.drawImage(logs,log3.gitx(),log3.gity(),this);
+		g.drawImage(logs,log4.gitx(),log4.gity(),this);
+		g.drawImage(turtles,turtle.gitx(),turtle.gity(),this);
+		g.drawImage(turtles,turtle1.gitx(),turtle1.gity(),this);
+		g.drawImage(turtles,turtle2.gitx(),turtle2.gity(),this);
+		g.drawImage(turtles,turtle3.gitx(),turtle3.gity(),this);
+		//g.drawImage(turtles,turtle4.gitx(),turtle4.gity(),this);
+		g.drawImage(turtles,turtle5.gitx(),turtle5.gity(),this);
+		
+		//g.setColor(Color.RED);
+        //g.fillRect(rObstacles.get(0).gitx(),rObstacles.get(0).gity(),rObstacles.get(0).geth(),rObstacles.get(0).getw());
+        //g.drawImage(frogPics.get(2),frog.gitx(),frog.gity(),this);
+        /*g.setColor(Color.YELLOW);
         g.fillRect(665,5,70,40);
         g.setColor(Color.YELLOW);
         g.fillRect(470,5,70,40);
         g.setColor(Color.YELLOW);
         g.fillRect(295,5,65,40);
         g.setColor(Color.YELLOW);
-        g.fillRect(105,5,70,40);
-
-
-		/*g.drawImage(logs,log1.getX(),log1.getY(),this);
-		g.drawImage(logs,log2.getX(),log2.getY(),this);
-		g.drawImage(logs,log3.getX(),log3.getY(),this);
-		g.drawImage(logs,log4.getX(),log4.getY(),this);
-		g.drawImage(logs,log5.getX(),log5.getY(),this);*/
-
+        g.fillRect(105,5,70,40);*/
+        if(cycle == 8){
+			g.drawImage(frogPics.get(0),frog.gitx(),frog.gity(),this);
+		}
+		else{
+			g.drawImage(frogPics.get(cycle+rotate/10),frog.gitx(),frog.gity(),this);
+		}
+        rotate += 1;
+        if(rotate == 20){
+        	rotate = 0;
+        }
+        for(int a=0;a<won.size();a++){
+        	if(won.get(a) == 1){
+        	g.drawImage(frogs,680,10,this);
+	        }
+	        if(won.get(a) == 2){
+	        	g.drawImage(frogs,485,10,this);
+	        }
+	        if(won.get(a) == 3){
+	        	g.drawImage(frogs,310,10,this);
+	        }
+	        if(won.get(a) == 4){
+	        	g.drawImage(frogs,120,10,this);
+	        }
+        }
+        g.setColor(Color.RED);
+		g.setFont(new Font("Comic Sans MS",Font.PLAIN,20));
+		g.drawString("Lives: "+frog.life(),10,30);
+   
+        //System.out.println(won.get());
 	}
 }
