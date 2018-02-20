@@ -355,8 +355,8 @@ class GamePanel extends JPanel{
         //Colour and type of font of number of lives
         g.setColor(Color.RED);
 		g.setFont(new Font("Comic Sans MS",Font.PLAIN,20));
-		g.drawString("Lives: "+frog.life(),10,30);//Draws the number of lives the frog has
-		g.drawString("Score: "+score,760,30);//Draws the number of lives the frog has
+		g.drawString("Lives: "+frog.life(),10,280);//Draws the number of lives the frog has
+		g.drawString("Score: "+score,730,280);//Draws the number of lives the frog has
    
         //System.out.println(won.get());
 	}
