@@ -58,7 +58,7 @@ public class WaterObstacle {
     		x = 533;
     	}
     	//The rectangle set by the water obstacle
-    	ob = new Rectangle(x,y,width,height);
+    	ob = new Rectangle(x,y,width,height+10);
     }
 
     public void moveObstacle(){//Moves the water obstacles in the lanes
@@ -97,5 +97,5 @@ public class WaterObstacle {
     public Rectangle getR(){//Gets the rectangle of the water obstacle onject
     	return ob;
     }
-    
+
 }
