@@ -2,44 +2,45 @@ import java.util.*;
 import java.awt.*;
 public class WaterObstacle {
     private int x, y, v, width, height, type;
+    private Rectangle ob;
     private String pic;
     public WaterObstacle(int tipe, int pos){
     	// 1 is turtle in lane 1, 2 is log lane 2, 3 is turtle lane 3, 4 is log lane 4
     	if(tipe == 1){
     		type = tipe;
     		x=850;
-	    	y=200;
-	    	v=2;
-	    	width=60;
-	    	height=80;
+	    	y=230;
+	    	v=1;
+	    	width=40;
+	    	height=40;
 	    	pic = "turtle.png";
     	}
     	if(tipe == 2){
     		type = tipe;
     		x=-50;
-	    	y=150;
-	    	v=4;
-	    	width=70;
-	    	height=100;
+	    	y=170;
+	    	v=2;
+	    	width=100;
+	    	height=40;
 	    	pic="log.png";
     	}
     	if(tipe == 3){
     		type = tipe;
     		x=850;
-	    	y=100;
-	    	v=3;
-	    	width=60;
-	    	height=80;
+	    	y=130;
+	    	v=2;
+	    	width=40;
+	    	height=40;
 	    	pic="turtle.png";
 
     	}
     	if(tipe == 4){
     		type = tipe;
     		x=-50;
-	    	y=50;
-	    	v=2;
-	    	width=70;
-	    	height=100;
+	    	y=70;
+	    	v=1;
+	    	width=100;
+	    	height=40;
 	    	pic="log.png";
     	}
     	if(pos == 2){
@@ -48,19 +49,20 @@ public class WaterObstacle {
     	else if(pos == 3){
     		x = 533;
     	}
+    	ob = new Rectangle(x,y,width,height+10);
     }
 
     public void moveObstacle(){
         if(type%2 == 0){
     		x += v;
     		if(x > 850){
-    		x = 0;
+    		x = -50;
     		}
     	}
     	else{
     		x -= v;
     		if(x<-50){
-    			x = 800;
+    			x = 850;
     		}
     	}
     }
@@ -80,11 +82,11 @@ public class WaterObstacle {
     public String pik(){
     	return pic;
     }
-    public boolean waterCollision(Rectangle p){
-    	if (p.intersects(new Rectangle(this.x, this.y, this.width, this.height))){
-    		 return true;
-    	}
-    	return false;
+    public int getV(){
+    	return v;
     }
-
+    public Rectangle getR(){
+    	return ob;
+    }
+    
 }
