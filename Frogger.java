@@ -261,6 +261,7 @@ class GamePanel extends JPanel{
 				}
 				if(count == 0){//No confinement, then we reset the frog
 					frog.reset();
+					frog.life(1);
 					System.out.println("NO");
 				}
 				else{
