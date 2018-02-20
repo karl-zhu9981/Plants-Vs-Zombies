@@ -1,11 +1,18 @@
+//Karl Zhu and Ibraheem Aloran
+//ICS 4U
+//Water obstacle.java
+//This class makes our obstacle object and the information that it goes with, the the obstacles in the game that helps your gameplay
+//If you jump and land on the water obstacles, you will travel with the obstacle
 import java.util.*;
 import java.awt.*;
 public class WaterObstacle {
-    private int x, y, v, width, height, type;
-    private Rectangle ob;
-    private String pic;
-    public WaterObstacle(int tipe, int pos){
+    private int x, y, v, width, height, type;//The information for each road obstacle
+    private String pic;//The picture of the water obstacle
+    private Rectangle ob;//The rectangle set by each water obstacle
+    public WaterObstacle(int tipe, int pos){//The lane the onstacle is in and the position it comes in the chain to appear on the screen
     	// 1 is turtle in lane 1, 2 is log lane 2, 3 is turtle lane 3, 4 is log lane 4
+    	//Initial stats for the water obstacle
+    	//Lane number, starting location, speed, size, and picture
     	if(tipe == 1){
     		type = tipe;
     		x=850;
@@ -43,49 +50,51 @@ public class WaterObstacle {
 	    	height=40;
 	    	pic="log.png";
     	}
+    	//The initial x coordinate values for the suceeding obstacles
     	if(pos == 2){
     		x = 266;
     	}
     	else if(pos == 3){
     		x = 533;
     	}
+    	//The rectangle set by the water obstacle
     	ob = new Rectangle(x,y,width,height+10);
     }
 
-    public void moveObstacle(){
-        if(type%2 == 0){
-    		x += v;
-    		if(x > 850){
+    public void moveObstacle(){//Moves the water obstacles in the lanes
+        if(type%2 == 0){//Lanes 2 and 4
+    		x += v;//Goes right
+    		if(x > 850){//Makes sure it goes in a continous rotation
     		x = -50;
     		}
     	}
     	else{
-    		x -= v;
-    		if(x<-50){
+    		x -= v;//Goes left
+    		if(x<-50){//Makes sure it goes in a continous rotation
     			x = 850;
     		}
     	}
     }
 
-    public int gitx(){
+    public int gitx(){//Gets the x coordinate of the obstacle
     	return x;
     }
-    public int gity(){
+    public int gity(){//Gets the y coordinate of the obstacle
     	return y;
     }
-    public int getw(){
+    public int getw(){//Gets the width of the obstacle
     	return width;
     }
-    public int geth(){
+    public int geth(){//Gets the height of the obstacle
     	return height;
     }
-    public String pik(){
+    public String pik(){//Returns the picture of the road obstacle
     	return pic;
     }
-    public int getV(){
+    public int getV(){//Gets the speed of the obstacle
     	return v;
     }
-    public Rectangle getR(){
+    public Rectangle getR(){//Gets the rectangle of the water obstacle onject
     	return ob;
     }
     
