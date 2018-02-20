@@ -27,7 +27,7 @@ public class Frogger extends JFrame implements ActionListener,KeyListener{//Our 
 		myTimer.start();
 
 		menuPic = new ImageIcon("images.jpg").getImage();//Background image
-		menuPic = menuPic.getScaledInstance(800,600,Image.SCALE_SMOOTH); 
+		menuPic = menuPic.getScaledInstance(800,600,Image.SCALE_SMOOTH);
 		JLabel backLabel = new JLabel(new ImageIcon(menuPic));
 		JLayeredPane mPage=new JLayeredPane(); 	// LayeredPane allows my to control what shows on top
 		mPage.setLayout(null);
@@ -100,16 +100,16 @@ class GamePanel extends JPanel{
 	Rectangle base2 = new Rectangle(470,5,70,40);
 	Rectangle base3 = new Rectangle(295,5,65,40);
 	Rectangle base4 = new Rectangle(105,5,70,40);
-	
+
 	private boolean [] keys;//Determines which keys have been pressed down
 	private Image back, frogs, cars, trucks, turtles, logs, fPics, heart;//The images that we need for our objects and background
-	private int end, count, landed, score;//Variables for game state, which water obstacle we are on and score 
+	private int end, count, landed, score;//Variables for game state, which water obstacle we are on and score
 	//Variables for sprites
 	private int rotate = 0;
 	private int cycle = 0;
 	private int info = 20;
 	public GamePanel(){
-		//Declaring all of the objects 
+		//Declaring all of the objects
 		car = new RoadObstacle(1,1);
 		//car1 = new RoadObstacle(1,2);
 		car2 = new RoadObstacle(1,3);
@@ -177,7 +177,7 @@ class GamePanel extends JPanel{
 		logs = new ImageIcon("log.png").getImage();
 		logs = logs.getScaledInstance(log.getw(),log.geth(),Image.SCALE_SMOOTH);
 		heart = new ImageIcon("heart.png").getImage();
-		heart = heart.getScaledInstance(20,20,Image.SCALE_SMOOTH); 
+		heart = heart.getScaledInstance(20,20,Image.SCALE_SMOOTH);
 		for(int i=0;i<8;i++){//Adds the frog sprite pictures to an arraylist
 			fPics = new ImageIcon((i)+".png").getImage();
 			fPics = fPics.getScaledInstance(35,35,Image.SCALE_SMOOTH);
@@ -219,6 +219,8 @@ class GamePanel extends JPanel{
 		else{//Stationary movement
 			cycle = 8;
 		}
+		//System.out.println(frog.gitx());
+		System.out.println(frog.gity());
 	}
 	public void gameState(){
 		/*if(winRects.size() == 0){
@@ -227,7 +229,7 @@ class GamePanel extends JPanel{
 		if(frog.life()==0){//If the frog has no more lives, then they lose
 			System.out.println("LOSE");
 			end = 1;
-		}	
+		}
 		else{//Checks for intersection among the frog and road obstacles, and confinement between the frog and water obstacles
 			for (int i=0; i<rObstacles.size(); i++){//Touches the road obstacles, then they lose a life and we reset it
 				if (rObstacles.get(i).roadCollision(frog.getR())){
@@ -236,8 +238,9 @@ class GamePanel extends JPanel{
 
 				}
 			}
-			if(frog.gity()<274){
+			if(frog.gity()<260){
 				for (int i=0; i<wObstacles.size(); i++){//Overlaps the water obstacles, then they move with the water obstacle
+					System.out.println(wObstacles.get(i).gity());
 					if (frog.getR().intersects(wObstacles.get(i).getR())){
 						landed = i;
 						frog.setx(wObstacles.get(i).gitx());
@@ -267,9 +270,9 @@ class GamePanel extends JPanel{
 				else{
 					System.out.println("YES");
 					count = 0;
-				}	
+				}
 			}
-			
+
 			for(int i=0;i<winRects.size();i++){//Checks if the frog is on the win rectangles and the frog lands there
 				if(frog.getR().intersects(winRects.get(i))){
 					won.add(i+1);
@@ -294,7 +297,7 @@ class GamePanel extends JPanel{
         g.fillRect(log1.gitx(),log1.gity(),log1.getw(),log1.geth());
         g.setColor(Color.YELLOW);
         g.fillRect(turtle.gitx(),turtle.gity(),turtle.geth(),turtle.getw()+10);*/
-        
+
         //Draws the car, truck, logs, and turtle objects based on their location
 		g.drawImage(cars,car.gitx(),car.gity(),this);
 		g.drawImage(cars,car2.gitx(),car2.gity(),this);
@@ -314,7 +317,7 @@ class GamePanel extends JPanel{
 		g.drawImage(turtles,turtle3.gitx(),turtle3.gity(),this);
 		//g.drawImage(turtles,turtle4.gitx(),turtle4.gity(),this);
 		g.drawImage(turtles,turtle5.gitx(),turtle5.gity(),this);
-		
+
 		//g.setColor(Color.RED);
         //g.fillRect(rObstacles.get(0).gitx(),rObstacles.get(0).gity(),rObstacles.get(0).geth(),rObstacles.get(0).getw());
         //g.drawImage(frogPics.get(2),frog.gitx(),frog.gity(),this);
@@ -326,7 +329,7 @@ class GamePanel extends JPanel{
         g.fillRect(295,5,65,40);
         g.setColor(Color.YELLOW);
         g.fillRect(105,5,70,40);*/
-        
+
         //Sets the sprites for the cycle of images to do each action
         if(cycle == 8){//Stationary movement
 			g.drawImage(frogPics.get(0),frog.gitx(),frog.gity(),this);
@@ -358,7 +361,7 @@ class GamePanel extends JPanel{
 		g.setFont(new Font("Comic Sans MS",Font.PLAIN,20));
 		g.drawString("Lives: "+frog.life(),10,300);//Draws the number of lives the frog has
 		g.drawString("Score: "+score,680,300);//Draws the number of lives the frog has
-   
+
         //System.out.println(won.get());
 	}
 }
