@@ -37,7 +37,7 @@ public class RoadObstacle {
     		type = tipe;
     		x=-50;
 	    	y=350;
-	    	v=2;
+	    	v=4;
 	    	width=40;
 	    	height=80;
 	    	pic="truck1Right.png";
