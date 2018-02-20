@@ -103,7 +103,7 @@ class GamePanel extends JPanel{
 	
 	private boolean [] keys;//Determines which keys have been pressed down
 	private Image back, frogs, cars, trucks, turtles, logs, fPics, heart;//The images that we need for our objects and background
-	private int end, count,  landed;//Variables for game state and which water obstacle we are on
+	private int end, count, landed, score;//Variables for game state, which water obstacle we are on and score 
 	//Variables for sprites
 	private int rotate = 0;
 	private int cycle = 0;
@@ -205,14 +205,17 @@ class GamePanel extends JPanel{
 		else if(keys[KeyEvent.VK_LEFT] ){//Goes left
 			cycle = 4;
 			frog.jump(1);
+			score+=10;
 		}
 		else if(keys[KeyEvent.VK_UP] ){//Goes up
 			cycle = 0;
 			frog.jump(2);
+			score+=10;
 		}
 		else if(keys[KeyEvent.VK_DOWN] ){//GOes down
 			cycle = 2;
 			frog.jump(4);
+			score+=10;
 		}
 		else{//Stationary movement
 			cycle = 8;
@@ -270,6 +273,7 @@ class GamePanel extends JPanel{
 			for(int i=0;i<winRects.size();i++){//Checks if the frog is on the win rectangles and the frog lands there
 				if(frog.getR().intersects(winRects.get(i))){
 					won.add(i+1);
+					score+=100;
 					winRects.remove(i);
 					frog.reset();//Another frog is now initiated
 				}
@@ -353,6 +357,7 @@ class GamePanel extends JPanel{
         g.setColor(Color.RED);
 		g.setFont(new Font("Comic Sans MS",Font.PLAIN,20));
 		g.drawString("Lives: "+frog.life(),10,30);//Draws the number of lives the frog has
+		g.drawString("Score: "+score,760,30);//Draws the number of lives the frog has
    
         //System.out.println(won.get());
 	}
