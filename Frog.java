@@ -17,7 +17,7 @@ public class Frog{
     	width = 25;
     	height = 25;
     	pic = "RetroFrog_100W.png";
-    	v = 2;
+    	v = 6;
     	lives = 3;
 
     }
