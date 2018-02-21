@@ -1,6 +1,6 @@
 //Karl Zhu and Ibraheem Aloran
 //ICS 4U
-//Water obstacle.java
+//WaterObstacle.java
 //This class makes our obstacle object and the information that it goes with, the the obstacles in the game that helps your gameplay
 //If you jump and land on the water obstacles, you will travel with the obstacle
 import java.util.*;
@@ -16,39 +16,48 @@ public class WaterObstacle {
     	if(tipe == 1){
     		type = tipe;
     		x=850;
-	    	y=230;
+	    	y=235;
 	    	v=1;
 	    	width=40;
-	    	height=40;
+	    	height=30;
 	    	pic = "turtle.png";
     	}
     	if(tipe == 2){
     		type = tipe;
     		x=-50;
-	    	y=170;
+	    	y=190;
 	    	v=2;
 	    	width=100;
-	    	height=40;
+	    	height=30;
 	    	pic="log.png";
     	}
     	if(tipe == 3){
     		type = tipe;
     		x=850;
-	    	y=130;
+	    	y=145;
 	    	v=2;
 	    	width=40;
-	    	height=40;
+	    	height=30;
 	    	pic="turtle.png";
 
     	}
     	if(tipe == 4){
     		type = tipe;
     		x=-50;
-	    	y=70;
+	    	y=100;
 	    	v=1;
 	    	width=100;
-	    	height=40;
+	    	height=30;
 	    	pic="log.png";
+    	}
+    	if(tipe == 5){
+    		type = tipe;
+    		x=850;
+	    	y=55;
+	    	v=1;
+	    	width=40;
+	    	height=30;
+	    	pic="turtle.png";
     	}
     	//The initial x coordinate values for the suceeding obstacles
     	if(pos == 2){
@@ -57,8 +66,6 @@ public class WaterObstacle {
     	else if(pos == 3){
     		x = 533;
     	}
-    	//The rectangle set by the water obstacle
-    	ob = new Rectangle(x,y,width,height+10);
     }
 
     public void moveObstacle(){//Moves the water obstacles in the lanes
@@ -95,6 +102,8 @@ public class WaterObstacle {
     	return v;
     }
     public Rectangle getR(){//Gets the rectangle of the water obstacle onject
+    	//The rectangle set by the water obstacle
+    	ob = new Rectangle(x,y,width,height);
     	return ob;
     }
 
