@@ -84,7 +84,7 @@ class GamePanel extends JPanel{
 	//Our objects- Cars, Trucks, Turtles, Logs and the user's frog
 	private RoadObstacle car, car1, car2, car3, car4, car5;
 	private RoadObstacle truck, truck1, truck2, truck3, truck4, truck5;
-	private WaterObstacle turtle, turtle1, turtle2, turtle3, turtle4, turtle5;
+	private WaterObstacle turtle, turtle1, turtle2, turtle3, turtle4, turtle5, turtle6, turtle7, turtle8;
 	private WaterObstacle log, log1, log2, log3, log4;
 	private Frog frog;
 	////The arraylists which contains our objects (road and water obstacles, frog sprite pics and the winning rectangles)
@@ -128,6 +128,9 @@ class GamePanel extends JPanel{
 		turtle3 = new WaterObstacle(3,1);
 		//turtle4 = new WaterObstacle(3,2);
 		turtle5 = new WaterObstacle(3,3);
+		turtle6 = new WaterObstacle(5,1);
+		turtle7 = new WaterObstacle(5,3);
+		turtle8 = new WaterObstacle(5,4);
 		log = new WaterObstacle(2,1);
 		log1 = new WaterObstacle(4,2);
 		log2 = new WaterObstacle(4,1);
@@ -151,6 +154,9 @@ class GamePanel extends JPanel{
 		wObstacles.add(turtle2);
 		wObstacles.add(turtle3);
 		wObstacles.add(turtle5);
+		wObstacles.add(turtle6);
+		wObstacles.add(turtle7);
+		wObstacles.add(turtle8);
 		wObstacles.add(log);
 		wObstacles.add(log1);
 		wObstacles.add(log2);
@@ -238,7 +244,7 @@ class GamePanel extends JPanel{
 
 				}
 			}
-			if(frog.gity()<266){
+			if(frog.gity()<264){//In the lake
 				for (int i=0; i<wObstacles.size(); i++){//Overlaps the water obstacles, then they move with the water obstacle
 					System.out.println(wObstacles.get(i).gity());
 					if (frog.getR().intersects(wObstacles.get(i).getR())){
@@ -262,7 +268,7 @@ class GamePanel extends JPanel{
 						checker.remove(i);
 					}
 				}
-				if(count == 0){//No confinement, then we reset the frog
+				if(count == 0){//No confinement, then we reset the frog and lose a life
 					frog.reset();
 					frog.life(1);
 					System.out.println("NO");
@@ -317,6 +323,9 @@ class GamePanel extends JPanel{
 		g.drawImage(turtles,turtle3.gitx(),turtle3.gity(),this);
 		//g.drawImage(turtles,turtle4.gitx(),turtle4.gity(),this);
 		g.drawImage(turtles,turtle5.gitx(),turtle5.gity(),this);
+		g.drawImage(turtles,turtle6.gitx(),turtle6.gity(),this);
+		g.drawImage(turtles,turtle7.gitx(),turtle7.gity(),this);
+		g.drawImage(turtles,turtle8.gitx(),turtle8.gity(),this);
 
 		//g.setColor(Color.RED);
         //g.fillRect(rObstacles.get(0).gitx(),rObstacles.get(0).gity(),rObstacles.get(0).geth(),rObstacles.get(0).getw());
