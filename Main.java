@@ -80,3 +80,7 @@ class GamePanel extends JPanel implements MouseListener{
 
 	@Override
 	public void mouseExited(MouseEvent e){}
+	public void paintComponent(Graphics g){
+		g.drawImage(mapPic,0,0,this);
+	}
+}
