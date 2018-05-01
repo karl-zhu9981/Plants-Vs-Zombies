@@ -57,7 +57,7 @@ public class Main extends JFrame implements ActionListener{//Our main class. Che
 class GamePanel extends JPanel implements MouseListener{
 	private Image map, mapPic;
 	public GamePanel(){
-		map= new ImageIcon("").getImage();
+		map= new ImageIcon("Background1.jpg").getImage();
 		mapPic = map.getScaledInstance(800,600,Image.SCALE_SMOOTH);
 		setSize(800,600);
 		addMouseListener(this);
