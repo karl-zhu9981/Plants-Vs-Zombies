@@ -13,17 +13,17 @@ public class Main extends JFrame implements MouseListener, ActionListener{//Our 
     	super("Plants Vs Zombies");//Our caption and using the super class
     	game = new GamePanel();
     	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	setSize(1200,750);//Size of our screen
+    	setSize(1000,700);//Size of our screen
 		myTimer = new Timer(10,this);
 		myTimer.start();
 
 		menuPic = new ImageIcon("menuPic.jpg").getImage();//Background image
-		menuPic = menuPic.getScaledInstance(1200,750,Image.SCALE_SMOOTH);
+		menuPic = menuPic.getScaledInstance(1000,700,Image.SCALE_SMOOTH);
 		JLabel backLabel = new JLabel(new ImageIcon(menuPic));
 		JLayeredPane mPage=new JLayeredPane(); 	// LayeredPane allows my to control what shows on top
 		mPage.setLayout(null);
 
-		backLabel.setSize(1200,750);
+		backLabel.setSize(1000,700);
 		backLabel.setLocation(0,0);
 		mPage.add(backLabel,1);					// The numbers I use when adding to the LayeredPane
 												// are just relative to one another. Higher numbers on top.
@@ -39,8 +39,6 @@ public class Main extends JFrame implements MouseListener, ActionListener{//Our 
     }
     public static void main(String[] args) {
 		new Main();//Call the game to run
-
-
     }
     public void actionPerformed(ActionEvent evt){
     	Object source =evt.getSource();
@@ -75,12 +73,25 @@ public class Main extends JFrame implements MouseListener, ActionListener{//Our 
 }
 
 class GamePanel extends JPanel implements MouseListener{
-	private Image map, mapPic;
+	private Image map, mapPic, load, loadPic, sel, selPic;
+	//private String page = "Game";
 	public GamePanel(){
 		map= new ImageIcon("Background1.jpg").getImage();
-		mapPic = map.getScaledInstance(1200,750,Image.SCALE_SMOOTH);
+		mapPic = map.getScaledInstance(1000,700,Image.SCALE_SMOOTH);
+		sel= new ImageIcon("selecting.jpg").getImage();
+		selPic = sel.getScaledInstance(80,550,Image.SCALE_SMOOTH);
+		//load= new ImageIcon("Background1.jpg").getImage();
+		//loadPic = load.getScaledInstance(1200,750,Image.SCALE_SMOOTH);
 		//setSize(800,600);
 		addMouseListener(this);
+	}
+	public static void delay(long n){
+		try{
+			Thread.sleep(n);
+		}
+		catch(InterruptedException ex ){
+
+		}
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {}
@@ -101,7 +112,17 @@ class GamePanel extends JPanel implements MouseListener{
 	@Override
 	public void mouseExited(MouseEvent e){}
 
+	public void releaseSuns(){
+
+	}
 	public void paintComponent(Graphics g){
+		/*if (page=="Loading"){
+			g.drawImage(loadPic,0,0,this);
+			Thread.delay(1500);
+			page="Game";
+		}*/
+		//delay(1500);
 		g.drawImage(mapPic,0,0,this);
+		g.drawImage(selPic,20, 50, this);
 	}
 }
