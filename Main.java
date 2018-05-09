@@ -73,13 +73,24 @@ public class Main extends JFrame implements MouseListener, ActionListener{//Our 
 }
 
 class GamePanel extends JPanel implements MouseListener{
-	private Image map, mapPic, load, loadPic, sel, selPic;
+	private Image map, mapPic, load, loadPic, selOne, selPic1, selTwo, selPic2;
+	private int mx, my;
+	private Rectangle plantRect;
 	//private String page = "Game";
 	public GamePanel(){
 		map= new ImageIcon("Background1.jpg").getImage();
 		mapPic = map.getScaledInstance(1000,700,Image.SCALE_SMOOTH);
-		sel= new ImageIcon("selecting.jpg").getImage();
-		selPic = sel.getScaledInstance(80,550,Image.SCALE_SMOOTH);
+		selOne= new ImageIcon("selecting1.jpg").getImage();
+		selPic1 = selOne.getScaledInstance(80,200,Image.SCALE_SMOOTH);
+		selTwo= new ImageIcon("selecting2.jpg").getImage();
+		selPic2 = selTwo.getScaledInstance(80,130,Image.SCALE_SMOOTH);
+		/*sunRect= new Rectangle();
+		peaRect= new Rectangle();
+		iceRect= new Rectangle();
+		venusRect= new Rectangle();
+		bombRect= new Rectangle();
+		nutRect= new Rectangle();
+		cherryRect= new Rectangle();*/
 		//load= new ImageIcon("Background1.jpg").getImage();
 		//loadPic = load.getScaledInstance(1200,750,Image.SCALE_SMOOTH);
 		//setSize(800,600);
@@ -102,8 +113,8 @@ class GamePanel extends JPanel implements MouseListener{
 	@Override
 	public void mousePressed(MouseEvent e){
 		Graphics g = getGraphics();
-    	int mx=(e.getX());
-    	int my=(e.getY());
+    	mx=(e.getX());
+    	my=(e.getY());
 	}
 
 	@Override
@@ -115,6 +126,13 @@ class GamePanel extends JPanel implements MouseListener{
 	public void releaseSuns(){
 
 	}
+	//public void selectPlant(){
+		//for (p:plants){
+		//	if p.intersects(mx, my, 1, 1){
+				//plantRect = p;
+		//	}
+	//	}
+	//}
 	public void paintComponent(Graphics g){
 		/*if (page=="Loading"){
 			g.drawImage(loadPic,0,0,this);
@@ -123,6 +141,7 @@ class GamePanel extends JPanel implements MouseListener{
 		}*/
 		//delay(1500);
 		g.drawImage(mapPic,0,0,this);
-		g.drawImage(selPic,20, 50, this);
+		g.drawImage(selPic1,20, 50, this);
+		g.drawImage(selPic2,20, 250, this);
 	}
 }
